@@ -26,31 +26,34 @@ def components_BFS(G):
   for node in G.nodes():
     Nodes_tots.append(node)
   Node_actual=Nodes_tots[0]
-  Llista_components.append([Node_actual])
+  Llista_revisats.append(Node_actual)
+  
   Buit=False
   Revisar=True
   Component=1
   while not Buit:
     while Revisar:
-      for node in all_neighbors(Node_actual)
+      for node in G.neighbors(Node_actual):
         if node not in Llista_revisats:
-          Nodes_revisar.append()
+          Nodes_revisar.append(node)
+          Llista_revisats.append(node)
       
-      Llista_revisats.append(Node_actual)
-      Nodes_tots.pop(Node_actual)
+      Nodes_tots.remove(Node_actual)
       
       if len(Llista_components)<Component:
         Llista_components.append([Node_actual])
       else:
-        Llista_components[Component].append(Node_actual)
+        Llista_components[Component-1].append(Node_actual)
 
-      Nodes_revisar=Nodes_revisar[1:]
+      Nodes_revisar.pop(0)
       if Nodes_revisar == []:
         Revisar=False
       else:
         Node_actual=Nodes_revisar[0]
     if Nodes_tots !=[]:
       Node_actual=Nodes_tots[0]
+      Component+=1
+      Revisar=True
     else:
       Buit=True
 
