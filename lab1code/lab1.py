@@ -56,6 +56,8 @@ def components_BFS(G):
       Revisar=True
     else:
       Buit=True
+  return Llista_components
+
 
 # Tasca 3: Components DFS
 def components_DFS(G):
