@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Mar  4 13:14:11 2026
+
+@author: 
+"""
+
 import networkx as nx
-import time, json
+import time, json, random
 
 
 # Tasca 1: Construir el graf
@@ -127,3 +134,47 @@ def components_DFS(G):
       Buit=True
   t3=time.time()
   return Llista_components, t3-t2
+
+# Tasca 4: Experiment tallant arestes
+def experiment_cut_edges(G):
+  t5=time.time()
+  Nombre_comp, t=components_DFS(G)
+  Count=0
+  if len(Nombre_comp)!=1:
+    print("No hi ha una sola component")
+  
+  else:
+    Tallar=True
+    edges=list(G.edges())
+    random.shuffle(edges)
+    while Tallar:
+      edges_tallar=edges[:100000]
+      edges=edges[100000:]
+      for edge in edges_tallar:
+          G.remove_edge(edge[0], edge[1])
+      Count+=1
+      print(Count, ' ',end='')
+      Nombre_comp, t=components_DFS(G)
+      if len(Nombre_comp)!=1:
+          Tallar=False
+  
+  t6=time.time()
+  return Count, t6-t5
+
+
+
+nom_arxiu='lastfm_asia_features.json'
+G=build_graph(nom_arxiu)
+
+print(G)
+"""
+LLCBFS, temps1=components_BFS(G)
+LLCDFS, temps2=components_DFS(G)
+print(LLCBFS, len(LLCBFS), temps1)
+print(LLCDFS, len(LLCDFS), temps2)
+print(temps1, temps2)
+print(len(LLCBFS), len(LLCDFS))
+"""
+Count, temps3=experiment_cut_edges(G)
+print("\n", Count, temps3)
+  
