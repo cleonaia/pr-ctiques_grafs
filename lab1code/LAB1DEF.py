@@ -42,7 +42,7 @@ def build_graph(nom_arxiu):
 # Tasca 2: Components BFS
 
 def components_BFS(G):
-  t0=time.time()
+  Time_BFS1=time.time()
   Nodes_tots=[]
   Nodes_revisar=[]
   Llista_revisats=[]
@@ -84,13 +84,14 @@ def components_BFS(G):
       Revisar=True
     else:
       Buit=True
-  t1=time.time()
-  return Llista_components, t1-t0
+  Time_BFS2=time.time()
+  print("Temps que ha trigat BFS: ",Time_BFS2-Time_BFS1)
+  return Llista_components
 
 
 # Tasca 3: Components DFS
 def components_DFS(G):
-  t2=time.time()
+  Time_DFS1=time.time()
   Nodes_tots=[]
   Nodes_revisar=[]
   Llista_revisats=[]
@@ -132,13 +133,14 @@ def components_DFS(G):
       Revisar=True
     else:
       Buit=True
-  t3=time.time()
-  return Llista_components, t3-t2
+  Time_DFS2=time.time()
+  print("Temps que ha trigat DFS: ", Time_DFS2-Time_DFS1)
+  return Llista_components
 
 # Tasca 4: Experiment tallant arestes
 def experiment_cut_edges(G):
-  t5=time.time()
-  Nombre_comp, t=components_DFS(G)
+  Time_experiment1=time.time()
+  Nombre_comp=components_DFS(G)
   Count=0
   if len(Nombre_comp)!=1:
     print("No hi ha una sola component")
@@ -148,22 +150,22 @@ def experiment_cut_edges(G):
     edges=list(G.edges())
     random.shuffle(edges)
     while Tallar:
-      edges_tallar=edges[:100000]
-      edges=edges[100000:]
+      edges_tallar=edges[:1]
+      edges=edges[1:]
       for edge in edges_tallar:
           G.remove_edge(edge[0], edge[1])
       Count+=1
-      print(Count, ' ',end='')
-      Nombre_comp, t=components_DFS(G)
+      Nombre_comp=components_DFS(G)
       if len(Nombre_comp)!=1:
           Tallar=False
   
-  t6=time.time()
-  return Count, t6-t5
+  Time_experiment2=time.time()
+  print("Temps que ha trigat l'experiment de tallar arestes: ", Time_experiment2-Time_experiment1)
+  return Count
 
 
 
-nom_arxiu='lastfm_asia_features.json'
+nom_arxiu='lastfm_asia_edges.csv'
 G=build_graph(nom_arxiu)
 
 print(G)
@@ -175,6 +177,6 @@ print(LLCDFS, len(LLCDFS), temps2)
 print(temps1, temps2)
 print(len(LLCBFS), len(LLCDFS))
 """
-Count, temps3=experiment_cut_edges(G)
-print("\n", Count, temps3)
+Count=experiment_cut_edges(G)
+print("\n", Count)
   
