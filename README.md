@@ -1,1 +1,1 @@
-# pr-ctiques_grafs
+# pràctiques_grafs
